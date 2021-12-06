@@ -24,6 +24,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+          registry-url: https://npm.pkg.github.com/
+          scope: "@prevayl"
+          always-auth: true
 
       - name: Restore npm cache
         uses: actions/cache@v2
@@ -33,9 +36,19 @@ jobs:
 
       - name: Install packages
         run: yarn install --frozen-lockfile
+        env:
+          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
 
       - name: Version package
         run: npx standard-version --no-verify
+        env:
+          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+
+      - name: Publish package
+        run: yarn publish
+        env:
+          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
 
       - name: Publish package tag
         id: publish_tag
@@ -51,9 +64,3 @@ jobs:
           release_name: ${{ steps.publish_tag.outputs.tag_name }}
           tag_name: ${{ steps.publish_tag.outputs.tag_name }}
           body: 'react-native-zoomable-view'
-
-      - name: Publish package
-        run: yarn publish
-        env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
