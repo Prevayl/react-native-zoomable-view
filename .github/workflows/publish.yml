@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
-          scope: '@prevayl'
+          scope: "@prevayl"
           always-auth: true
 
       - name: Restore npm cache
@@ -36,11 +36,6 @@ jobs:
 
       - name: Install packages
         run: yarn install --frozen-lockfile
-        env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-
-      - name: Prepare
-        run: yarn prepare
         env:
           GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
 
