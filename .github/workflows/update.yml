@@ -1,0 +1,36 @@
+name: Update Fork
+
+on:
+  # todo - remove push trigger after testing
+  push:
+    branches:
+      - main
+      - master
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  update:
+    name: Update Fork
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Git config
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config --global merge.ours.driver true
+
+      - name: Add Upstream Remote
+        run: git remote add upstream https://github.com/openspacelabs/react-native-zoomable-view.git
+
+      - name: Fetch Upstream
+        run: git fetch upstream
+
+      - name: Merge Upstream
+        run: git merge upstream/master --no-edit --allow-unrelated-histories
+
+      - name: Publish updates
+        run: git push

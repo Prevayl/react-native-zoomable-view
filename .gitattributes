@@ -1,3 +1,8 @@
 *.pbxproj -text
 # specific for windows script files
 *.bat text eol=crlf
+
+# keep our version of certain files on merge
+.gitattributes merge=ours
+package.json merge=ours
+yarn.lock merge=ours
