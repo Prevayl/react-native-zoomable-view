@@ -1,11 +1,6 @@
 name: Update Fork
 
 on:
-  # todo - remove push trigger after testing
-  push:
-    branches:
-      - main
-      - master
   schedule:
     - cron: '0 0 * * *'
 
