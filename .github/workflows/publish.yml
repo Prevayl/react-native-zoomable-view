@@ -34,10 +34,10 @@ jobs:
       - name: Install packages
         run: yarn install --frozen-lockfile
 
-      - name: Version parsers package
+      - name: Version package
         run: npx standard-version --no-verify
 
-      - name: Publish parsers package tag
+      - name: Publish package tag
         id: publish_tag
         run: |
           git push --follow-tags
